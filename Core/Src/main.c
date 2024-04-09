@@ -17,6 +17,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <ens160.h>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -25,7 +26,6 @@
 #include <string.h>
 #include "ssd1306.h"
 #include "ssd1306_tests.h"
-#include "ENS160.h"
 #include "pmsa003i.h"
 
 /* USER CODE END Includes */

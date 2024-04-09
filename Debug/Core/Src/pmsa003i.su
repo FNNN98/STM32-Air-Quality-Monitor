@@ -1,0 +1,3 @@
+../Core/Src/pmsa003i.c:15:9:PMSA003I_Init	24	static
+../Core/Src/pmsa003i.c:40:19:pmsa003i_ReadData	64	static
+../Core/Src/pmsa003i.c:71:19:pmsa003i_ReadRegister	40	static

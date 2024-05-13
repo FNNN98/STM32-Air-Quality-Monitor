@@ -2,7 +2,17 @@
 
 
   <img src="https://github.com/FNNN98/STM32-Air-Quality-Monitor/blob/main/air-quality-pinout-configuration.png?raw=true" width="800">
-  
+
+# Introduction
+As concerns about air pollution continue to rise globally, it's crucial to have access to accurate and real-time data about the air we breathe, whether indoors or outdoors. This project aims to address this need by creating a portable USB-C powered air quality monitoring solution.
+
+The primary goal of this project is to develop a compact indoor/outdoor air quality monitor capable of measuring key pollutants such as PM2.5, PM5, PM10, environmental CO2, TVOC, and providing an Air Quality Index (AQI) reading.
+
+Living in Milan, air quality has and will always be a topic of concern, especially given our location in the heart of the Po Valley (Pianura Padana). The Po Valley is notorious for its heavy industrial activity and dense urbanization, factors that contribute significantly to air pollution levels. In Milan particularly, surrounded by bustling streets and industrial zones, the need for vigilant air quality monitoring is ever-present. 
+
+Since the likelihood of [flattening the Turchino](https://www.youtube.com/watch?v=vmvpm51TdJM) is about as feasible as achieving pristine air in Milan, let's focus on what we can control: creating tools to monitor air pollution and address the health risks it poses.
+To my Ligurian friends, I hope you'll pardon my playful jab.
+
 # Hardware Used
 
 - <h3 align="left"> WeActStudio STM32F411CEU6 </h3>

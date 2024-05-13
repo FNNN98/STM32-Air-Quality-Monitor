@@ -10,7 +10,7 @@
 #ifndef INC_PMSA003I_H_
 #define INC_PMSA003I_H_
 
-#define PMSA003I_ADDRESS 0x12 // I2C Address
+#define PMSA003I_ADDRESS 0x12
 
 // Register Definitions
 #define REG_START_CHAR_1    0x00 // Start character 1 - Fixed value 0x42
@@ -39,36 +39,40 @@
 #define REG_DATA_10_LOW     0x17 // Number of particles > 2.5 μm in 0.1L of air low byte
 
 // Fixed Values
-#define START_CHAR_1_VALUE  0x42 // Fixed value for Start Character 1
-#define START_CHAR_2_VALUE  0x4D // Fixed value for Start Character 2
+#define START_CHAR_1_VALUE  0x42
+#define START_CHAR_2_VALUE  0x4D
 
+extern I2C_HandleTypeDef hi2c1;
+extern I2C_HandleTypeDef hi2c2;
+extern I2C_HandleTypeDef hi2c3;
+extern I2C_HandleTypeDef hi2c4;
 
 typedef struct PMSAQIdata {
-  I2C_HandleTypeDef *i2cHandle; ///< I2C Handle
-  uint16_t framelen;       ///< How long this data chunk is
-  uint16_t pm10_standard,  ///< Standard PM1.0
-      pm25_standard,       ///< Standard PM2.5
-      pm100_standard;      ///< Standard PM10.0
-  uint16_t pm10_env,       ///< Environmental PM1.0
-      pm25_env,            ///< Environmental PM2.5
-      pm100_env;           ///< Environmental PM10.0
-  uint16_t particles_03um, ///< 0.3um Particle Count
-      particles_05um,      ///< 0.5um Particle Count
-      particles_10um,      ///< 1.0um Particle Count
-      particles_25um,      ///< 2.5um Particle Count
-      particles_50um,      ///< 5.0um Particle Count
-      particles_100um;     ///< 10.0um Particle Count
-  uint16_t unused;         ///< Unused
-  uint16_t checksum;       ///< Packet checksum
+  uint16_t framelen;
+  uint16_t pm10_standard;
+  uint16_t pm25_standard;
+  uint16_t pm100_standard;
+  uint16_t pm10_env;
+  uint16_t pm25_env;
+  uint16_t pm100_env;
+  uint16_t particles_03um;
+  uint16_t particles_05um;
+  uint16_t particles_10um;
+  uint16_t particles_25um;
+  uint16_t particles_50um;
+  uint16_t particles_100um;
+  uint16_t unused;
+  uint16_t checksum;
+  I2C_HandleTypeDef *i2cHandle;
 } PMSA003I;
 
 
-uint8_t PMSA003I_Init(I2C_HandleTypeDef *i2cHandle , PMSA003I *dev);
+void PMSA003I_Init(I2C_HandleTypeDef *i2cHandle , PMSA003I *dev);
 
 // DATA ACQUISITION
-HAL_StatusTypeDef pmsa003i_ReadData(PMSA003I *dev);
+bool pmsa003i_ReadData(PMSA003I *dev);
 
 //LOW LEVEL
-HAL_StatusTypeDef pmsa003i_ReadRegister(PMSA003I *dev, uint8_t reg, uint8_t *data);
+HAL_StatusTypeDef pmsa003i_ReadRegister(I2C_HandleTypeDef *i2cHandle, PMSA003I *dev, uint8_t reg, uint8_t *data);
 
 #endif /* INC_PMSA003I_H_ */

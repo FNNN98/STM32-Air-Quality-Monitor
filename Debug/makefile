@@ -60,8 +60,8 @@ all: main-build
 main-build: AirQuality_STM32F411.elf secondary-outputs
 
 # Tool invocations
-AirQuality_STM32F411.elf AirQuality_STM32F411.map: $(OBJS) $(USER_OBJS) C:\Users\fredd\STM32CubeIDE\workspace_1.15.0\AirQuality_STM32F411\STM32F411CEUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "AirQuality_STM32F411.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\fredd\STM32CubeIDE\workspace_1.15.0\AirQuality_STM32F411\STM32F411CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="AirQuality_STM32F411.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+AirQuality_STM32F411.elf AirQuality_STM32F411.map: $(OBJS) $(USER_OBJS) C:\Users\fredd\STM32CubeIDE\workspace_1.15.0\workspace_1.15.0\AirQuality_STM32F411\STM32F411CEUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "AirQuality_STM32F411.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\fredd\STM32CubeIDE\workspace_1.15.0\workspace_1.15.0\AirQuality_STM32F411\STM32F411CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="AirQuality_STM32F411.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

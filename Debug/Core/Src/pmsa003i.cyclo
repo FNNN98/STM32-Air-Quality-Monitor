@@ -1,3 +1,3 @@
-../Core/Src/pmsa003i.c:15:9:PMSA003I_Init	1
-../Core/Src/pmsa003i.c:40:19:pmsa003i_ReadData	2
-../Core/Src/pmsa003i.c:71:19:pmsa003i_ReadRegister	1
+../Core/Src/pmsa003i.c:12:6:PMSA003I_Init	1
+../Core/Src/pmsa003i.c:31:6:pmsa003i_ReadData	5
+../Core/Src/pmsa003i.c:63:19:pmsa003i_ReadRegister	1

@@ -1,3 +1,4 @@
+"./Core/Src/ens160.o"
 "./Core/Src/main.o"
 "./Core/Src/pmsa003i.o"
 "./Core/Src/ssd1306.o"

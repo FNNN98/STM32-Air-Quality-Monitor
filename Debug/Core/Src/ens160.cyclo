@@ -1,0 +1,16 @@
+../Core/Src/ens160.c:15:10:ENS160_CONCAT_BYTES	1
+../Core/Src/ens160.c:22:6:write_reg_spi	4
+../Core/Src/ens160.c:48:8:read_reg_spi	5
+../Core/Src/ens160.c:128:6:i2c_writeReg	4
+../Core/Src/ens160.c:164:8:i2c_readReg	6
+../Core/Src/ens160.c:204:6:ens160_Init	1
+../Core/Src/ens160.c:220:10:read_part_id	1
+../Core/Src/ens160.c:233:6:set_opmode	1
+../Core/Src/ens160.c:239:6:set_int	1
+../Core/Src/ens160.c:246:9:read_data_aqi	1
+../Core/Src/ens160.c:253:10:read_data_tvoc	1
+../Core/Src/ens160.c:261:10:read_data_eco2	1
+../Core/Src/ens160.c:268:6:read_firmware_version	1
+../Core/Src/ens160.c:290:9:read_opmode	1
+../Core/Src/ens160.c:295:6:setTempAndHum	1
+../Core/Src/ens160.c:309:9:get_ENS160Status	1

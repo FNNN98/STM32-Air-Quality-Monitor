@@ -9,13 +9,7 @@
 #include <stdbool.h>
 #include "pmsa003i.h"
 
-extern I2C_HandleTypeDef hi2c2;
-#define PMSA003I_ADDRESS 0x12
-
-uint8_t PMSA003I_Init(I2C_HandleTypeDef *i2cHandle , PMSA003I *dev){
-	uint8_t errorNum = 0;
-
-	dev->i2cHandle	= i2cHandle;
+void PMSA003I_Init(I2C_HandleTypeDef *i2cHandle, PMSA003I *dev){
     dev->framelen = 0;            // Initial value for framelen
     dev->pm10_standard = 0;       // Initial value for pm10_standard
     dev->pm25_standard = 0;       // Initial value for pm25_standard
@@ -31,43 +25,42 @@ uint8_t PMSA003I_Init(I2C_HandleTypeDef *i2cHandle , PMSA003I *dev){
     dev->particles_100um = 0;     // Initial value for particles_100um
     dev->unused = 0;              // Initial value for unused
     dev->checksum = 0;            // Initial value for checksum
-
-    return errorNum;
-
+    dev->i2cHandle	= i2cHandle;
 }
 
-// DATA ACQUISITION
-HAL_StatusTypeDef pmsa003i_ReadData(PMSA003I *dev) {
-    uint8_t data[24]; // Array to store the read data
+bool pmsa003i_ReadData(PMSA003I *dev) {
+    const uint8_t num_bytes = 32;
+    uint8_t buffer[num_bytes];
+    HAL_I2C_Master_Receive(dev->i2cHandle, PMSA003I_ADDRESS, buffer, num_bytes, HAL_MAX_DELAY);
 
-    // Read registers 0x04 to 0x1B
-    HAL_StatusTypeDef status = HAL_I2C_Mem_Read(dev->i2cHandle, PMSA003I_ADDRESS, REG_DATA_1_HIGH, I2C_MEMADD_SIZE_8BIT, data, 24, HAL_MAX_DELAY);
-
-    if (status != HAL_OK) {
-        // TODO Extra error handling if I2C read fails
-        return status;
+    if (buffer[0] != 0x42) {
+        return false;
     }
 
-    // Parse the read data and store it in the device structure
-    dev->pm10_standard = (data[0] << 8) | data[1];
-    dev->pm25_standard = (data[2] << 8) | data[3];
-    dev->pm100_standard = (data[4] << 8) | data[5];
-    dev->pm10_env = (data[6] << 8) | data[7];
-    dev->pm25_env = (data[8] << 8) | data[9];
-    dev->pm100_env = (data[10] << 8) | data[11];
-    dev->particles_03um = (data[12] << 8) | data[13];
-    dev->particles_05um = (data[14] << 8) | data[15];
-    dev->particles_10um = (data[16] << 8) | data[17];
-    dev->particles_25um = (data[18] << 8) | data[19];
-    dev->particles_50um = (data[20] << 8) | data[21];
-    dev->particles_100um = (data[22] << 8) | data[23];
+    int16_t sum = 0;
+    for (uint8_t i = 0; i < 30; i++) {
+        sum += buffer[i];
+    }
 
-    return HAL_OK;
+    uint16_t buffer_u16[15];
+    for (uint8_t i = 0; i < 15; i++) {
+        buffer_u16[i] = buffer[2 + i * 2 + 1];
+        buffer_u16[i] += (buffer[2 + i * 2] << 8);
+    }
+
+    memcpy((void *)dev, (void *)buffer_u16, 30);
+
+    if (sum != dev->checksum) {
+        return false;
+    }
+
+    return true;
 }
+
 
 
 //LOW LEVEL
-HAL_StatusTypeDef pmsa003i_ReadRegister(PMSA003I *dev, uint8_t reg, uint8_t *data){
-	return HAL_I2C_Mem_Read(dev->i2cHandle, PMSA003I_ADDRESS, reg, I2C_MEMADD_SIZE_8BIT, data, 1, HAL_MAX_DELAY);
+HAL_StatusTypeDef pmsa003i_ReadRegister(I2C_HandleTypeDef *i2cHandle, PMSA003I *dev, uint8_t reg, uint8_t *data){
+	return HAL_I2C_Mem_Read(&hi2c2, PMSA003I_ADDRESS, reg, I2C_MEMADD_SIZE_8BIT, data, 1, HAL_MAX_DELAY);
 }
 

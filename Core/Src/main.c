@@ -17,7 +17,6 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include <ens160.h>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -27,6 +26,7 @@
 #include "ssd1306.h"
 #include "ssd1306_tests.h"
 #include "pmsa003i.h"
+#include "ens160.h"
 
 /* USER CODE END Includes */
 
@@ -68,7 +68,7 @@ static void MX_I2C1_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_I2C2_Init(void);
 /* USER CODE BEGIN PFP */
-void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi);
+
 void int_to_str(int num, char *str);
 /* USER CODE END PFP */
 
@@ -113,14 +113,13 @@ int main(void)
   /* USER CODE BEGIN 2 */
   ssd1306_Init(); // Initialize SSD1306
   PMSA003I_Init(&hi2c2, &sensor_data);  // Initialize PMSA003i and its struct
-
+  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET); // Pulling SET High
   HAL_SPI_TransmitReceive_DMA(&hspi1, buffer_tx, buffer_rx, 4);
-
-  static char line1[] = "TEST axaro1";
-  static char line2[] = "TEST axaro1";
-  static char line3[] = "TEST axaro1";
-  static char line4[] = "TEST axaro1";
-  static char line5[] = "TEST axaro1";
+  char line1[16];
+  char line2[16];
+  char line3[16];
+  char line4[16];
+  char line5[16];
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -129,27 +128,17 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	    HAL_Delay(1500);
-	  	HAL_StatusTypeDef status = pmsa003i_ReadData(&sensor_data);
+	  pmsa003i_ReadData(&sensor_data);
+	  strcpy(line1, "OK ");
+	  //strcpy(line2, sensor_data.particles_10um);
+	  sprintf(line3, "%u", sensor_data.pm10_standard);
+	  sprintf(line4, "%u", sensor_data.pm25_standard);
+	  sprintf(line5, "%u", sensor_data.pm100_standard);
 
-	  	if (status == HAL_OK) {
-	  			HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-	  		  char line1[] = "TEST==OK axaro1";
-	  		  char line2[] = "TEST==OK axaro1";
-	  		  char line3[] = "TEST==OK axaro1";
-	  		  char line4[] = "TEST==OK axaro1";
-	  		  char line5[] = "TEST==OK axaro1";
-	  	      ssd1306_print(line1, line2, line3, line4, line5);
-	  	      ssd1306_UpdateScreen();
-	  	      HAL_Delay(1500);
-	  	    }
-
-	  	  ssd1306_UpdateScreen();
-	  	  ssd1306_Fill(Black);
-	      ssd1306_print(line1, line2, line3, line4, line5);
-	      ssd1306_UpdateScreen();
-	      HAL_Delay(500);
-	      //HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+	  ssd1306_print(line1, line2, line3, line4, line5);
+	  ssd1306_UpdateScreen();
+	  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET); // Pulling RST Low
+	  HAL_Delay(2000);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -345,12 +334,22 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8|GPIO_PIN_9, GPIO_PIN_RESET);
+
   /*Configure GPIO pin : PC13 */
   GPIO_InitStruct.Pin = GPIO_PIN_13;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PB8 PB9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */

@@ -35,8 +35,9 @@ To my Ligurian friends, I hope you'll pardon my playful jab.
   The DFRobot ENS160 breakout board features a dual I2C-SPI interface, which personally makes it more appealing than the Sparkfun and Adafruit variants.
 
 - <h3 align="left"> Feiyang SSD1306 OLED [128x64] </h3>
-  Cheap monochrome oled featuring contrast control, display RAM and an oscillator. By using drivers built-in synthetic benchmarks I was able to reach 34.5fps, I could probably squeeze a little bit more performance if I were to bit-bang.
-  I went for the I2C variant but there are also SSD1306 with an SPI interface.
+  Cheap monochrome OLED screen featuring contrast control, display RAM and an oscillator. 
+  By using https://github.com/afiskon/stm32-ssd1306 built-in synthetic benchmarks I was able to reach 34.5fps, I could probably squeeze a little bit      more performance if I were to bit-bang.
+  I opted for the I2C model but there are also SSD1306 variants featuring an SPI interface.
 
 Informations and dependencies
 

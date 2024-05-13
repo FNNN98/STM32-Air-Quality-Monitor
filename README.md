@@ -39,6 +39,9 @@ To my Ligurian friends, I hope you'll pardon my playful jab.
   By using https://github.com/afiskon/stm32-ssd1306 built-in synthetic benchmarks I was able to reach 34.5fps, I could probably squeeze a little bit      more performance if I were to bit-bang.
   I opted for the I2C model but there are also SSD1306 variants featuring an SPI interface.
 
+- <h3 align="left"> Voktta ST-LINK V2 </h3>
+  Cheap STLink V2 clone, based on a F103CBT6, it gets the job done.
+
 Informations and dependencies
 
     Built with STM32CubeIde Version: 1.15.0 Build 20695_20240315_1429

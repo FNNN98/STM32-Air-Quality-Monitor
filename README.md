@@ -12,19 +12,21 @@
 - <h3 align="left"> Adafruit PMSA003I </h3>
   
   The Adafruit PMSA003I Air Quality Breakout is a sensor that monitors air quality. It measures PM1.0, PM2.5, and PM10.0 concentrations, as well as particulate matter in different size bins.
-  It connects via I2C,  It effectively measures particle concentrations within the PM2.5 standard range of 0~500μg/m³, with a maximum range exceeding 1000μg/m³.
+  It connects via I2C (there are also 2x StemmaQT sockets),  It effectively measures particle concentrations within the PM2.5 standard range of 0~500μg/m³, with a maximum range exceeding 1000μg/m³.
   The module offers high resolution (1μg/m³) and low consistency error (±10%) across different particle concentrations.
   It operates on a 5.0V DC power supply, with an active current draw of ≤100 mA and standby current of ≤200 μA.
+  The board can handle both 3.3v and 5v inputs due to its mini boost circuit. The 3.3v pin on the breakout board can also power external devices.
   
 - <h3 align="left"> Fermion: ENS160 </h3>
   
   The Fermion ENS160 Air Quality Sensor, featuring ScioSense's ENS160 sensor chip, is designed for indoor air quality monitoring, detecting multiple IAQ parameters such as TVOC, eCO2, and AQI.
   Its TrueVOC™ technology integrates metal oxide (MOX) technology for improved accuracy, rapid response, and anti-interference capabilities.
   Equipped with on-chip algorithms, it outputs comprehensive environmental data while also feauturing an embedded automatic baseline correction algorithm ensures long-term sensor stability.. The sensor undergoes a 3-minute preheating phase upon power-on.
+  The DFRobot ENS160 breakout board features a dual I2C-SPI interface, which personally makes it more appealing than the Sparkfun and Adafruit variants.
 
 - <h3 align="left"> Feiyang SSD1306 OLED [128x64] </h3>
-    
-
+  Cheap monochrome oled featuring contrast control, display RAM and an oscillator. By using drivers built-in synthetic benchmarks I was able to reach 34.5fps, I could probably squeeze a little bit more performance if I were to bit-bang.
+  I went for the I2C variant but there are also SSD1306 with an SPI interface.
 
 Informations and dependencies
 
